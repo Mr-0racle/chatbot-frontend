@@ -46,9 +46,9 @@ class Chatbox {
         let msg1 = { name: "User", message: text1 }
         this.messages.push(msg1);
 
-        fetch('http://127.0.0.1:5000/predict', {
+        fetch('ASK AI GUY FOR LINK/chat', {
             method: 'POST',
-            body: JSON.stringify({ message: text1 }),
+            body: JSON.stringify({ prompt: text1 }),
             mode: 'cors',
             headers: {
               'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ class Chatbox {
           })
           .then(r => r.json())
           .then(r => {
-            let msg2 = { name: "Sam", message: r.answer };
+            let msg2 = { name: "Sam", message: r.Assistant };
             this.messages.push(msg2);
             this.updateChatText(chatbox)
             textField.value = ''
