@@ -82,13 +82,13 @@ body {
     width: fit-content;
 }
 
-.messages__item--operator {
+/* .messages__item--operator {
     margin-left: auto;
 }
 
 .messages__item--visitor {
     margin-right: auto;
-}
+} */
 
 /* FOOTER */
 .chatbox__footer {
@@ -204,4 +204,67 @@ body {
     border-bottom-left-radius: 50px;
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+}
+
+.typing-dots {
+    display: flex;
+    align-items: center;
+    padding-left: 10px; /* Adjust as needed */
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    background-color: #aaa;
+    border-radius: 50%;
+    margin-right: 4px;
+    animation: typingDots 1.4s infinite ease-in-out; /* Adjust animation duration as needed */
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typingDots {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Your existing CSS styles */
+/* Add or modify styles as needed */
+
+/* Example styles for user's messages on the right */
+.messages__item--visitor {
+    background-color: #DCF8C6; /* Set background color for user's messages */
+    color: #000; /* Set text color */
+    /* text-align: right; */ /* Align text to the right */
+    margin-bottom: 10px; /* Add spacing between messages */
+    padding: 8px 12px; /* Adjust padding */
+    border-radius: 15px; /* Round corners */
+    max-width: 70%; /* Set maximum width of messages */
+    margin-left: auto; /* Push messages to the right */
+    word-wrap: break-word;
+}
+
+/* Example styles for chatbot's messages on the left */
+.messages__item--operator {
+    background-color: #E5E5EA; /* Set background color for chatbot's messages */
+    color: #000; /* Set text color */
+    /* text-align: left; */
+    margin-bottom: 10px; /* Add spacing between messages */
+    padding: 8px 12px; /* Adjust padding */
+    border-radius: 15px; /* Round corners */
+    max-width: 70%; /* Set maximum width of messages */
+    margin-right: auto; /* Push messages to the left */
+    word-wrap: break-word;
 }
