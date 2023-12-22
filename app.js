@@ -1,9 +1,11 @@
+
 class Chatbox {
     constructor() {
         this.args = {
             openButton: document.querySelector('.chatbox__button button'),
             chatBox: document.querySelector('.chatbox__support'),
             sendButton: document.querySelector('.send__button'),
+            typingIndicator: document.querySelector('.typing-indicator'),
             inputField: document.querySelector('.chatbox__input--footer')
         }
 
@@ -47,20 +49,14 @@ class Chatbox {
             return;
         }
 
-        // Create a new user message object
         const userMessage = { name: "User", message };
-
-        // Push the user's message to the end of the messages array
         this.messages.push(userMessage);
 
-        // Update the chat display with the user's message
         this.updateChatText();
 
-        // Show typing dots before sending the message
         this.showTypingDots();
 
-        // Call the AI service to get the response
-        fetch('ASK AI GUY FOR LINK/chat', {
+        fetch("https://c99e-43-247-157-253.ngrok-free.appv/chat", {
             method: 'POST',
             body: JSON.stringify({ prompt: message }),
             mode: 'cors',
@@ -73,19 +69,13 @@ class Chatbox {
             const botMessage = { name: "Sam", message: response.Assistant };
             this.messages.push(botMessage);
 
-            // Update the chat display with the bot's message
             this.updateChatText();
-
-            // Hide typing dots after receiving the bot's response
             this.hideTypingDots();
 
-            // Clear the input field
             textField.value = '';
         })
         .catch(error => {
             console.error('Error:', error);
-
-            // Hide typing dots in case of an error
             this.hideTypingDots();
         });
     }
@@ -97,7 +87,7 @@ class Chatbox {
             if (message.name === "Sam") {
                 html += `<div class="messages__item messages__item--operator">${message.message}</div>`;
             } else {
-                html += `<div class="messages__item messages__item--visitor">${message.message}</div>`;
+                html = `<div class="messages__item messages__item--visitor">${message.message}</div>` + html;
             }
         }
 
@@ -107,14 +97,20 @@ class Chatbox {
         chatMessage.scrollTop = chatMessage.scrollHeight;
     }
 
+
+
     showTypingDots() {
-        const dotsElement = document.querySelector('.messages__item--operator.typing-dots');
-        dotsElement.classList.add('typing-active');
+        const dotsElement = document.querySelector('.typing-indicator');
+        if (dotsElement) {
+            dotsElement.classList.add('typing-active');
+        }
     }
 
     hideTypingDots() {
-        const dotsElement = document.querySelector('.messages__item--operator.typing-dots');
-        dotsElement.classList.remove('typing-active');
+        const dotsElement = document.querySelector('.typing-indicator');
+        if (dotsElement) {
+            dotsElement.classList.remove('typing-active');
+        }
     }
 }
 
