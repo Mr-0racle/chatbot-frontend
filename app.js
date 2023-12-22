@@ -51,9 +51,26 @@
         const userMessage = { name: "User", message };
         this.messages.push(userMessage);
 
+<<<<<<< HEAD
         // Simulated response from server (replace this with actual fetch call)
         const samResponse = { name: "Sam", message: "This is a response from Sam." };
         this.messages.push(samResponse);
+=======
+        fetch('ASK AI GUY FOR LINK/chat', {
+            method: 'POST',
+            body: JSON.stringify({ prompt: text1 }),
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          })
+          .then(r => r.json())
+          .then(r => {
+            let msg2 = { name: "Sam", message: r.Assistant };
+            this.messages.push(msg2);
+            this.updateChatText(chatbox)
+            textField.value = ''
+>>>>>>> 1d9e20fa4f1b74b98813dd11067caecc496ce0a7
 
         this.updateChatText();
         textField.value = '';
