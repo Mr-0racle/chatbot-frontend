@@ -201,7 +201,6 @@ body {
 
 
 .messages__item--visitor {
-    /* Existing or modified styles */
     background-color: #DCF8C6;
     color: #000;
     margin-bottom: 10px;
@@ -212,7 +211,6 @@ body {
     word-wrap: break-word;
 }
 
-/* Example styles for chatbot's messages on the left */
 .messages__item--operator {
     /* Existing or modified styles */
     background-color: #E5E5EA;
@@ -225,38 +223,12 @@ body {
     word-wrap: break-word;
 }
 
-/* Show the dots when typing is active */
-.typing-active .messages__item--operator.typing-dots {
-    display: flex;
-    align-items: center;
-    padding-left: 10px; /* Adjust as needed */
+.chatbox__gif img {
+        /* Existing or modified styles */
+        background-color: #E5E5EA;
+        color: #000;
+        margin-bottom: 10px;
+        padding: 1px 1px;
+        border-radius: 15px;
+        margin-right: auto;
 }
-
-.messages__item--operator.typing-dots .dot {
-    height: 8px;
-    width: 8px;
-    background-color: #aaa;
-    border-radius: 50%;
-    margin-right: 4px;
-    animation: typingDots 1.4s infinite ease-in-out; /* Adjust animation duration as needed */
-}
-
-.dot:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.dot:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-@keyframes typingDots {
-    0%, 100% {
-        opacity: 0;
-        transform: scale(0);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-

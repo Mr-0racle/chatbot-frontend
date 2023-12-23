@@ -79,7 +79,7 @@ class Chatbox {
 
         for (const message of this.messages) {
             if (message.name === "Sam") {
-                html += `<div class="messages__item messages__item--operator">${message.message}</div>`;
+                html = `<div class="messages__item messages__item--operator">${message.message}</div>` + html;
             } else {
                 html = `<div class="messages__item messages__item--visitor">${message.message}</div>` + html;
             }
