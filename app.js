@@ -1,4 +1,3 @@
-
 class Chatbox {
     constructor() {
         this.args = {
@@ -42,45 +41,40 @@ class Chatbox {
     }
 
     sendMessage() {
-        const textField = this.args.inputField;
-        const message = textField.value.trim();
+        const message = this.getMessageFromInput();
 
-        if (message === "") {
+        if (!message) {
             return;
         }
 
-        const userMessage = { name: "User", message };
-        this.messages.push(userMessage);
+        this.addUserMessage(message);
+        this.updateChatDisplay();
 
-        this.updateChatText();
+        this.showTypingIndicator();
 
-        this.showTypingDots();
-
-        fetch("https://c99e-43-247-157-253.ngrok-free.appv/chat", {
-            method: 'POST',
-            body: JSON.stringify({ prompt: message }),
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(response => response.json())
-        .then(response => {
-            const botMessage = { name: "Sam", message: response.Assistant };
-            this.messages.push(botMessage);
-
-            this.updateChatText();
-            this.hideTypingDots();
-
-            textField.value = '';
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            this.hideTypingDots();
-        });
+        this.sendBotResponse(message)
+            .then(botResponse => {
+                this.addBotMessage(botResponse);
+                this.updateChatDisplay();
+                this.hideTypingIndicator();
+                this.clearInputField();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                this.hideTypingIndicator();
+            });
     }
 
-    updateChatText() {
+    getMessageFromInput() {
+        const textField = this.args.inputField;
+        return textField.value.trim();
+    }
+
+    addUserMessage(message) {
+        this.messages.push({ name: "User", message });
+    }
+
+    updateChatDisplay() {
         let html = '';
 
         for (const message of this.messages) {
@@ -97,20 +91,40 @@ class Chatbox {
         chatMessage.scrollTop = chatMessage.scrollHeight;
     }
 
-
-
-    showTypingDots() {
-        const dotsElement = document.querySelector('.typing-indicator');
+    showTypingIndicator() {
+        const dotsElement = this.args.typingIndicator;
         if (dotsElement) {
             dotsElement.classList.add('typing-active');
         }
     }
 
-    hideTypingDots() {
-        const dotsElement = document.querySelector('.typing-indicator');
+    hideTypingIndicator() {
+        const dotsElement = this.args.typingIndicator;
         if (dotsElement) {
             dotsElement.classList.remove('typing-active');
         }
+    }
+
+    sendBotResponse(message) {
+        return fetch("ask the ai guy", {
+            method: 'POST',
+            body: JSON.stringify({ prompt: message }),
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json());
+    }
+
+    addBotMessage(response) {
+        const botMessage = { name: "Sam", message: response.Assistant };
+        this.messages.push(botMessage);
+    }
+
+    clearInputField() {
+        const textField = this.args.inputField;
+        textField.value = '';
     }
 }
 
